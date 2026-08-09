@@ -1,0 +1,24 @@
+# operator-stack — the read-only bundle for RomeoRaven/protoAgent issue #2.
+#
+# Incubation pin: operator-plugin has merged 0.4.0 metadata but no authorized
+# release. This exact commit SHA is immutable and intentionally skips update
+# checks. Move to a verified release tag only after separate release approval.
+
+id: operator-stack
+name: Operator Stack
+description: >-
+  A conservative protoAgent fleet-operator foundation. It installs and suggests
+  enabling only the read-only Operator Control plugin, starts with no enrolled
+  targets or credentials, and performs no control action.
+
+verified_against: 0.127.0
+
+plugins:
+  - { id: operator_control, url: https://github.com/RomeoRaven/operator-plugin, ref: b4ffc439ecdab57169990309edc0805c66bf4588 }
+
+enabled: [operator_control]
+
+config:
+  operator_control:
+    targets: []
+    timeout_seconds: 5
