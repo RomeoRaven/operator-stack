@@ -3,7 +3,7 @@ from pathlib import Path
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
-PLUGIN_SHA = "b4ffc439ecdab57169990309edc0805c66bf4588"
+PLUGIN_SHA = "f99ceb4437dadd968ab66d488e13e930ceb7c7d0"
 PLUGIN_URL = "https://github.com/RomeoRaven/operator-plugin"
 
 
@@ -16,7 +16,7 @@ def test_bundle_is_one_immutable_read_only_operator_member():
 
     assert bundle["id"] == "operator-stack"
     assert bundle["name"] == "Operator Stack"
-    assert bundle["verified_against"] == "0.127.0"
+    assert bundle["verified_against"] == "0.131.3"
     assert bundle["plugins"] == [
         {
             "id": "operator_control",

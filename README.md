@@ -34,11 +34,12 @@ Target URLs and optional bearer mappings are operator-owned host configuration. 
 
 ## Why the pin is a commit SHA
 
-The merged Operator Control 0.4 code has not been released. This incubation bundle pins its exact immutable merge commit rather than treating issue #2 work as release authorization. The pin will move to a verified release tag only after a separate release decision.
+The merged Operator Control 0.5 code has not been released. This incubation bundle pins its exact immutable merge commit rather than treating issue #2 work as release authorization. The pin will move to a verified release tag only after a separate release decision.
 
 ## Included
 
 - one pinned `operator_control` plugin;
+- target readiness, version-skew, and incomplete-plugin findings supplied by the pinned plugin;
 - empty target configuration;
 - deterministic timeout default;
 - standalone manifest/security tests;

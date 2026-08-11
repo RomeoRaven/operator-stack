@@ -8,7 +8,7 @@ import tempfile
 from pathlib import Path
 from unittest.mock import patch
 
-PLUGIN_SHA = "b4ffc439ecdab57169990309edc0805c66bf4588"
+PLUGIN_SHA = "f99ceb4437dadd968ab66d488e13e930ceb7c7d0"
 
 
 def main(bundle_source: str) -> int:
@@ -39,9 +39,9 @@ def main(bundle_source: str) -> int:
         assert summary["config"] == {"operator_control": {"targets": [], "timeout_seconds": 5}}
         assert len(summary["installed"]) == 1
         installed = summary["installed"][0]
-        assert installed["id"] == "operator_control"
-        assert installed["requested_ref"] == PLUGIN_SHA
-        assert installed["resolved_sha"] == PLUGIN_SHA
+        assert installed["id"] == "operator_control", installed
+        assert installed["requested_ref"] == PLUGIN_SHA, installed
+        assert installed["resolved_sha"] == PLUGIN_SHA, installed
 
         cfg_path = config_dir / "langgraph-config.yaml"
         cfg_path.write_text(
