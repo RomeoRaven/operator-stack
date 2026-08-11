@@ -17,9 +17,9 @@ The first slice installs one read-only dependency, `RomeoRaven/operator-plugin`,
 
 ## Pin boundary
 
-Current member pin: immutable commit SHA `b4ffc439ecdab57169990309edc0805c66bf4588`.
+Current member pin: immutable commit SHA `f99ceb4437dadd968ab66d488e13e930ceb7c7d0`.
 
-Accepted protoAgent bundle guidance prefers release tags. `operator-plugin` 0.4 is merged but unreleased, and work on issue #2 is not release authorization. The SHA is therefore an explicit incubation pin: deterministic and non-updating. Replace it with a release tag only after separate release approval and a passing bundle re-verification.
+Accepted protoAgent bundle guidance prefers release tags. `operator-plugin` 0.5 is merged but unreleased, and work on issue #2 is not release authorization. The SHA is therefore an explicit incubation pin: deterministic and non-updating. Replace it with a release tag only after separate release approval and a passing bundle re-verification.
 
 ## Safety contract
 

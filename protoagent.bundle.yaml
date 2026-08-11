@@ -1,6 +1,6 @@
 # operator-stack — the read-only bundle for RomeoRaven/protoAgent issue #2.
 #
-# Incubation pin: operator-plugin has merged 0.4.0 metadata but no authorized
+# Incubation pin: operator-plugin has merged 0.5.0 metadata but no authorized
 # release. This exact commit SHA is immutable and intentionally skips update
 # checks. Move to a verified release tag only after separate release approval.
 
@@ -11,10 +11,10 @@ description: >-
   enabling only the read-only Operator Control plugin, starts with no enrolled
   targets or credentials, and performs no control action.
 
-verified_against: 0.127.0
+verified_against: 0.131.3
 
 plugins:
-  - { id: operator_control, url: https://github.com/RomeoRaven/operator-plugin, ref: b4ffc439ecdab57169990309edc0805c66bf4588 }
+  - { id: operator_control, url: https://github.com/RomeoRaven/operator-plugin, ref: f99ceb4437dadd968ab66d488e13e930ceb7c7d0 }
 
 enabled: [operator_control]
 
