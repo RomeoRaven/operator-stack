@@ -5,13 +5,15 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 PLUGIN_SHA = "f99ceb4437dadd968ab66d488e13e930ceb7c7d0"
 PLUGIN_URL = "https://github.com/RomeoRaven/operator-plugin"
+POLICY_SHA = "6bd00e5eab7f18f882c6af0107b408070a331074"
+POLICY_URL = "https://github.com/RomeoRaven/operator-policy-plugin"
 
 
 def _bundle() -> dict:
     return yaml.safe_load((ROOT / "protoagent.bundle.yaml").read_text())
 
 
-def test_bundle_is_one_immutable_read_only_operator_member():
+def test_bundle_has_two_immutable_read_only_operator_members():
     bundle = _bundle()
 
     assert bundle["id"] == "operator-stack"
@@ -22,9 +24,14 @@ def test_bundle_is_one_immutable_read_only_operator_member():
             "id": "operator_control",
             "url": PLUGIN_URL,
             "ref": PLUGIN_SHA,
-        }
+        },
+        {
+            "id": "operator_policy",
+            "url": POLICY_URL,
+            "ref": POLICY_SHA,
+        },
     ]
-    assert bundle["enabled"] == ["operator_control"]
+    assert bundle["enabled"] == ["operator_control", "operator_policy"]
 
 
 def test_bundle_starts_unbound_without_credentials_or_write_surfaces():
@@ -58,9 +65,11 @@ def test_canonical_grounding_and_operator_docs_preserve_incubation_boundary():
     readme = (ROOT / "README.md").read_text()
 
     assert "single agent-grounding source" in proto
-    assert "immutable commit SHA" in proto
+    assert "two immutable commit shas" in proto.lower()
+    assert "operator_select_attention" in proto
     assert "release authorization" in proto
     assert "not_configured" in readme
+    assert "no_attention_required" in readme
     assert "plugin install https://github.com/RomeoRaven/operator-stack" in readme
     assert "/home/romeoraven" not in (ROOT / "scripts" / "verify_bundle.py").read_text()
     assert not (ROOT / "AGENTS.md").exists()
