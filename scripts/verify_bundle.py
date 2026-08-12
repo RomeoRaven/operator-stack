@@ -9,7 +9,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 PLUGIN_SHA = "f99ceb4437dadd968ab66d488e13e930ceb7c7d0"
-POLICY_SHA = "f6b1953023b0039d05ae9e52aedc12b39554d894"
+POLICY_SHA = "f919cb1b936a3b215a274b95c5cc1000ebf1b0d4"
 
 
 def main(bundle_source: str) -> int:

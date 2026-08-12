@@ -28,7 +28,7 @@ protoAgent core owns fleet telemetry aggregation/UI and generic fleet-operating 
 Current pins:
 
 - Operator Control: `f99ceb4437dadd968ab66d488e13e930ceb7c7d0`
-- Operator Attention Policy: `f6b1953023b0039d05ae9e52aedc12b39554d894`
+- Operator Attention Policy: `f919cb1b936a3b215a274b95c5cc1000ebf1b0d4`
 
 Both are incubation pins. Neither issue #2 nor this integration is release authorization. Replace a pin with a release tag only after separate release approval and passing bundle re-verification.
 
