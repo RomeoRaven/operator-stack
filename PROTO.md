@@ -27,10 +27,15 @@ protoAgent core owns fleet telemetry aggregation/UI and generic fleet-operating 
 
 Current pins:
 
-- Operator Control: `f99ceb4437dadd968ab66d488e13e930ceb7c7d0`
-- Operator Attention Policy: `f919cb1b936a3b215a274b95c5cc1000ebf1b0d4`
+- Operator Control: `7895f50a726f97aca22e57f9618161bd1ba67318`
+- Operator Attention Policy: `ae2b438fac1cb55208ef9875a7561d92783be835`
 
 Both are incubation pins. Neither issue #2 nor this integration is release authorization. Replace a pin with a release tag only after separate release approval and passing bundle re-verification.
+
+The Phase A qualification host baseline is RR protoAgent 0.136.0 at
+`1d80d15e229ac51a419b53c3378db1bea4796379`. `verified_against` records the
+host version while this exact commit identity remains the immutable verification
+owner. It does not claim PC1 acceptance or stable-runtime promotion.
 
 ## Safety contract
 
