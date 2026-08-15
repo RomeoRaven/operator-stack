@@ -3,13 +3,15 @@ from __future__ import annotations
 import asyncio
 import json
 import os
+import subprocess
 import sys
 import tempfile
 from pathlib import Path
 from unittest.mock import patch
 
-PLUGIN_SHA = "f99ceb4437dadd968ab66d488e13e930ceb7c7d0"
-POLICY_SHA = "f919cb1b936a3b215a274b95c5cc1000ebf1b0d4"
+PROTOAGENT_SHA = "1d80d15e229ac51a419b53c3378db1bea4796379"
+PLUGIN_SHA = "7895f50a726f97aca22e57f9618161bd1ba67318"
+POLICY_SHA = "ae2b438fac1cb55208ef9875a7561d92783be835"
 
 
 def main(bundle_source: str) -> int:
@@ -18,17 +20,31 @@ def main(bundle_source: str) -> int:
         print(f"FAIL: protoAgent checkout not found at {checkout}")
         return 2
 
+    head = subprocess.run(
+        ["git", "-C", str(checkout), "rev-parse", "HEAD"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if head.returncode != 0 or head.stdout.strip() != PROTOAGENT_SHA:
+        actual = head.stdout.strip() or "unavailable"
+        print(f"FAIL: expected protoAgent {PROTOAGENT_SHA}, got {actual}")
+        return 2
+
     sys.path.insert(0, str(checkout))
     source = Path(bundle_source).resolve()
 
     with tempfile.TemporaryDirectory(prefix="operator-stack-verify-") as tmp:
         scratch = Path(tmp)
-        config_dir = scratch / "config"
-        plugins_dir = config_dir / "plugins"
-        config_dir.mkdir()
-        os.environ["PROTOAGENT_CONFIG_DIR"] = str(config_dir)
+        box_root = scratch / "box"
+        instance_root = scratch / "instance"
+        config_dir = instance_root / "config"
+        plugins_dir = instance_root / "plugins"
+        config_dir.mkdir(parents=True)
+        os.environ["PROTOAGENT_BOX_ROOT"] = str(box_root)
+        os.environ["PROTOAGENT_HOME"] = str(instance_root)
         os.environ["PROTOAGENT_PLUGINS_DIR"] = str(plugins_dir)
-        os.environ["PROTOAGENT_PLUGINS_LOCK"] = str(scratch / "plugins.lock")
+        os.environ["PROTOAGENT_PLUGINS_LOCK"] = str(instance_root / "plugins.lock")
 
         from graph.config import LangGraphConfig
         from graph.plugins import installer
@@ -91,7 +107,7 @@ def main(bundle_source: str) -> int:
         assert policy_result["status"] == "no_attention_required"
         assert policy_result["selected_finding"] is None
 
-        lock = json.loads((scratch / "plugins.lock").read_text())
+        lock = json.loads((instance_root / "plugins.lock").read_text())
         locked_by_id = {plugin["id"]: plugin for plugin in lock["plugins"]}
         assert locked_by_id["operator_control"]["requested_ref"] == PLUGIN_SHA
         assert locked_by_id["operator_control"]["resolved_sha"] == PLUGIN_SHA
@@ -102,6 +118,7 @@ def main(bundle_source: str) -> int:
             json.dumps(
                 {
                     "bundle": summary["bundle"],
+                    "protoagent_sha": PROTOAGENT_SHA,
                     "plugins": sorted(installed_by_id),
                     "resolved_shas": {
                         plugin_id: plugin["resolved_sha"] for plugin_id, plugin in sorted(installed_by_id.items())

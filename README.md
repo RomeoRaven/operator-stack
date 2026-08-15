@@ -9,6 +9,18 @@ It installs two pinned plugins:
 
 The bundle starts with no targets or credentials, so a fresh install performs no network inspection until an operator deliberately configures the fleet.
 
+## Verification baseline
+
+This Phase A candidate pins:
+
+- Operator Control `7895f50a726f97aca22e57f9618161bd1ba67318`;
+- Operator Attention Policy `ae2b438fac1cb55208ef9875a7561d92783be835`.
+
+The qualification host baseline is RR protoAgent **0.136.0** at
+`1d80d15e229ac51a419b53c3378db1bea4796379`. This identifies the source/runtime
+candidate for scratch verification; it is not PC1 acceptance, a release, or a
+stable-install authorization.
+
 ## Install
 
 From a current protoAgent checkout:
